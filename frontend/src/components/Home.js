@@ -1,20 +1,32 @@
-import React, { Component } from 'react';
-import PostList from './PostList';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom'
+import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+import ContentAdd from 'material-ui/svg-icons/content/add'
+import CategoryNavigation from './CategoryNavigation'
+import PostList from './post/PostList'
+import EditPostDialog from './post/EditPostDialog'
 
 class Home extends Component {
+
+    state = {
+        showCreatePost: false
+    }
 
     render() {
 
         return (
             <div>
-                <div className="categories">
-                    {this.props.categories.map(category => (
-                        <div key={category.name}>{category.name}</div>
-                    ))}
-                </div>
+                <CategoryNavigation category={this.props.category}/>
                 <PostList posts={this.props.posts} />
+                <div className="floating-action-button-wrapper">
+                <FloatingActionButton 
+                    className="floating-action-button"
+                    onClick={() => this.setState({showCreatePost: true})}>
+                    <ContentAdd />
+                </FloatingActionButton>
+                </div>
+                <EditPostDialog open={this.state.showCreatePost} onClose={() => this.setState({showCreatePost: false})}/>
             </div>
         )
     }
@@ -25,8 +37,9 @@ const mapStateToProps = ({ categories, posts }, oldProps) => {
     return {
         ...oldProps,
         categories: categories,
-        posts: posts
+        category: oldProps.match.params.category,
+        posts: oldProps.match.params.category ? posts.filter(post => post.category === oldProps.match.params.category) : posts
     }
 }
 
-export default connect(mapStateToProps)(Home);
+export default withRouter(connect(mapStateToProps)(Home))

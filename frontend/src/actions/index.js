@@ -7,6 +7,8 @@ export const ADD_POST = 'ADD_POST'
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
 export const UPDATE_POST = 'UPDATE_POST'
 export const DELETE_POST = 'DELETE_POST'
+export const SORT_POSTS = 'SORT_POSTS'
+export const SORT_COMMENTS = 'SORT_COMMENTS'
 
 export function receiveCategories(categories) {
     return {
@@ -57,3 +59,25 @@ export const fetchComments = postId => dispatch => BackendAPI
 export const addComment = (postId, comment) => dispatch => BackendAPI
     .createComment(postId, comment)
     .then(() => dispatch(fetchComments(postId)))
+
+export const updateComment = (comment) => dispatch => BackendAPI
+    .updateComment(comment)
+    .then(() => dispatch(fetchComments(comment.parentId)))
+
+export const deleteComment = comment => dispatch => BackendAPI
+    .deleteComment(comment.id)
+    .then(() => dispatch(fetchComments(comment.parentId)))
+
+export function sortPosts(sortConfig) {
+    return {
+        ...sortConfig,
+        type: SORT_POSTS
+    }
+}
+
+export function sortComments(sortConfig) {
+    return {
+        ...sortConfig,
+        type: SORT_COMMENTS
+    }
+}

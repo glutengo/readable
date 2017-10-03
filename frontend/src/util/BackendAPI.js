@@ -1,6 +1,6 @@
-import uuid from 'uuid/v1';
+import uuid from 'uuid/v1'
 
-const BACKEND_URL = 'http://localhost:3001';
+const BACKEND_URL = 'http://localhost:3001'
 
 export default {
     getCategories: () => {
@@ -16,8 +16,8 @@ export default {
     },
 
     createPost: post => {
-        post.id = uuid();
-        post.timestamp = Date.now();
+        post.id = uuid()
+        post.timestamp = Date.now()
         const url = `${BACKEND_URL}/posts`
         return fetch(url, {
             headers: {
@@ -48,7 +48,8 @@ export default {
                 'Authorization': 'whatever-you-want',
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            }, method: 'DELETE'})
+            }, method: 'DELETE'
+        })
             .then((res) => { return (res.json()) })
     },
 
@@ -59,9 +60,9 @@ export default {
     },
 
     createComment: (postId, comment) => {
-        comment.id = uuid();
-        comment.timestamp = Date.now();
-        comment.parentId = postId;
+        comment.id = uuid()
+        comment.timestamp = Date.now()
+        comment.parentId = postId
         const url = `${BACKEND_URL}/comments`
         return fetch(url, {
             headers: {
@@ -69,6 +70,32 @@ export default {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }, method: 'POST', body: JSON.stringify(comment)
+        })
+            .then((res) => { return (res.json()) })
+    },
+
+    updateComment: (comment) => {
+        comment.timestamp = Date.now()
+        const url = `${BACKEND_URL}/comments/${comment.id}`
+        return fetch(url, {
+            headers: {
+                'Authorization': 'whatever-you-want',
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }, method: 'PUT', body: JSON.stringify(comment)
+        })
+            .then((res) => { return (res.json()) })
+
+    },
+
+    deleteComment: commentId => {
+        const url = `${BACKEND_URL}/comments/${commentId}`
+        return fetch(url, {
+            headers: {
+                'Authorization': 'whatever-you-want',
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }, method: 'DELETE'
         })
             .then((res) => { return (res.json()) })
     }

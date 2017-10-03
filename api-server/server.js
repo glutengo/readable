@@ -153,7 +153,20 @@ app.get('/:category/posts', (req, res) => {
 })
 
 app.get('/posts', (req, res) => {
-    posts.getAll(req.token)
+    const promises = [posts.getAll(req.token), comments.getAll(req.token)]
+
+    Promise.all(promises)
+        .then( data => {
+            console.log(data);
+            const postData = data[0];
+            const commentData = data[1];
+            res.send(postData.map(post => {
+                post.comments = commentData.filter(comment => comment.parentId === post.id).length
+                return post
+            })
+        )})
+
+    /*posts.getAll(req.token)
       .then(
           (data) => res.send(data),
           (error) => {
@@ -162,7 +175,7 @@ app.get('/posts', (req, res) => {
                  error: 'There was an error.'
           })
         }
-      )
+      )*/
 })
 
 app.post('/posts', bodyParser.json(), (req, res) => {
