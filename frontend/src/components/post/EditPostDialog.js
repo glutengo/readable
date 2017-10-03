@@ -39,7 +39,7 @@ class EditPostDialog extends Component {
         if (nextProps.post) {
             this.setState({post: nextProps.post})
         } else {
-            this.setState({post: EMPTY_POST})
+            this.setState({post: {...EMPTY_POST, category: this.props.category}})
         }
     }
 

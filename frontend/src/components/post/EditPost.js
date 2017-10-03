@@ -36,7 +36,7 @@ class EditPost extends Component {
                     onChange={e => this.valueChanged('author', e.target.value)} />
                 <SelectField
                     fullWidth={true}
-                    floatingLabelText="Category"
+                    floatingLabelText="category"
                     value={this.props.post.category}
                     onChange={(e, value) => this.valueChanged('category', this.props.categories[value].name)}
                 >

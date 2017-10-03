@@ -49,7 +49,7 @@ class PostDetails extends Component {
                         <div className="post-info">
                             <VoteScore score={post.voteScore} />
                         </div>
-                        <PostActions post={post} />
+                        <PostActions post={post} onDelete={() => this.props.history.push('/')}/>
                     </CardHeader>
                     <CardText>
                         {post.body}

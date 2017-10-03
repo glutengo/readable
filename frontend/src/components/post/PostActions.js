@@ -32,8 +32,12 @@ class PostActions extends Component {
     }
 
     delete(event) {
+        console.log(event)
         event.stopPropagation()
         this.props.dispatch(deletePost(this.props.post))
+        if (this.props.onDelete) {
+            this.props.onDelete()
+        }
     }
 
     edit(event) {
@@ -68,9 +72,8 @@ class PostActions extends Component {
                     <ArrowDown/>
                 </IconButton>
                 <IconButton onClick={event => this.edit(event)} iconStyle={ICON_STYLE}>
-                    <Settings />
                 </IconButton>
-                <IconButton onClick={event => { event.stopPropagation() && this.setState({ showDelete: true }) }} iconStyle={ICON_STYLE}>>
+                <IconButton onClick={event => { event.stopPropagation(); this.setState({ showDelete: true }) }} iconStyle={ICON_STYLE}>>
                     <Delete/>
                 </IconButton>
             </div>

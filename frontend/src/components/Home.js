@@ -26,7 +26,9 @@ class Home extends Component {
                     <ContentAdd />
                 </FloatingActionButton>
                 </div>
-                <EditPostDialog open={this.state.showCreatePost} onClose={() => this.setState({showCreatePost: false})}/>
+                <EditPostDialog open={this.state.showCreatePost} 
+                                category={this.props.category}
+                                onClose={() => this.setState({showCreatePost: false})}/>
             </div>
         )
     }
