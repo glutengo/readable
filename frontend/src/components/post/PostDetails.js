@@ -37,7 +37,6 @@ class PostDetails extends Component {
 
     render() {
         const { post, comments } = this.props
-        console.log(this.props);
         return (post && (
             <div>
                 <Card>

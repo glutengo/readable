@@ -32,7 +32,6 @@ class PostActions extends Component {
     }
 
     delete(event) {
-        console.log(event)
         event.stopPropagation()
         this.props.dispatch(deletePost(this.props.post))
         if (this.props.onDelete) {
