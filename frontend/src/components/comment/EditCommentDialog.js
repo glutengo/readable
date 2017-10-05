@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
-import { addComment, updateComment } from '../../actions'
+import { addComment, updateComment } from '../../actions/comments'
 import EditComment from './EditComment'
 
 const EMPTY_COMMENT = {
@@ -26,9 +26,9 @@ class EditCommentDialog extends Component {
 
     handleSave() {
         if (this.props.comment) {
-            this.props.dispatch(updateComment(this.state.comment))
+            this.props.updateComment(this.state.comment)
         } else {
-            this.props.dispatch(addComment(this.state.comment))
+            this.props.addComment(this.state.comment)
         }
         this.props.onClose();
     }
@@ -67,4 +67,4 @@ class EditCommentDialog extends Component {
     }
 }
 
-export default connect()(EditCommentDialog)
+export default connect(oldProps => oldProps, {updateComment, addComment})(EditCommentDialog)

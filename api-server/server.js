@@ -157,7 +157,6 @@ app.get('/posts', (req, res) => {
 
     Promise.all(promises)
         .then( data => {
-            console.log(data);
             const postData = data[0];
             const commentData = data[1];
             res.send(postData.map(post => {
@@ -165,17 +164,6 @@ app.get('/posts', (req, res) => {
                 return post
             })
         )})
-
-    /*posts.getAll(req.token)
-      .then(
-          (data) => res.send(data),
-          (error) => {
-              console.error(error)
-              res.status(500).send({
-                 error: 'There was an error.'
-          })
-        }
-      )*/
 })
 
 app.post('/posts', bodyParser.json(), (req, res) => {

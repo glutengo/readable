@@ -2,15 +2,16 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Route, withRouter } from 'react-router-dom'
 import AppBar from 'material-ui/AppBar'
-import { fetchCategories, fetchPosts } from '../actions'
+import { fetchCategories } from '../actions/categories'
+import { fetchPosts } from '../actions/posts'
 import PostDetails from './post/PostDetails'
 import Home from './Home'
 
 class App extends Component {
 
   componentDidMount() {
-    this.props.dispatch(fetchCategories())
-    this.props.dispatch(fetchPosts())
+    this.props.fetchCategories()
+    this.props.fetchPosts()
   }
 
   render() {
@@ -28,4 +29,4 @@ class App extends Component {
   }
 }
 
-export default withRouter(connect()(App))
+export default withRouter(connect(oldProps => oldProps, {fetchCategories, fetchPosts})(App))

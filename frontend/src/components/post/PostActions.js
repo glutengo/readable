@@ -10,7 +10,7 @@ import Delete from 'material-ui/svg-icons/action/delete'
 import Settings from 'material-ui/svg-icons/action/settings'
 import ArrowDown from 'material-ui/svg-icons/hardware/keyboard-arrow-down'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
-import { updatePost, deletePost } from '../../actions'
+import { updatePost, deletePost } from '../../actions/posts'
 import EditPostDialog from './EditPostDialog'
 import {ICON_STYLE, ACTION_MENU_STYLE} from '../../config'
 
@@ -23,17 +23,17 @@ class PostActions extends Component {
 
     upVote(event) {
         event.stopPropagation()
-        this.props.dispatch(updatePost({ ...this.props.post, voteScore: this.props.post.voteScore + 1 }))
+        this.props.updatePost({ ...this.props.post, voteScore: this.props.post.voteScore + 1 })
     }
 
     downVote(event) {
         event.stopPropagation()
-        this.props.dispatch(updatePost({ ...this.props.post, voteScore: this.props.post.voteScore - 1 }))
+        this.props.updatePost({ ...this.props.post, voteScore: this.props.post.voteScore - 1 })
     }
 
     delete(event) {
         event.stopPropagation()
-        this.props.dispatch(deletePost(this.props.post))
+        this.props.deletePost(this.props.post)
         if (this.props.onDelete) {
             this.props.onDelete()
         }
@@ -71,6 +71,7 @@ class PostActions extends Component {
                     <ArrowDown/>
                 </IconButton>
                 <IconButton onClick={event => this.edit(event)} iconStyle={ICON_STYLE}>
+                    <Settings/>
                 </IconButton>
                 <IconButton onClick={event => { event.stopPropagation(); this.setState({ showDelete: true }) }} iconStyle={ICON_STYLE}>>
                     <Delete/>
@@ -97,5 +98,5 @@ class PostActions extends Component {
     }
 }
 
-export default connect()(PostActions)
+export default connect(oldProps => oldProps, {updatePost, deletePost})(PostActions)
 

@@ -10,7 +10,7 @@ import ArrowUp from 'material-ui/svg-icons/hardware/keyboard-arrow-up'
 import Delete from 'material-ui/svg-icons/action/delete'
 import Settings from 'material-ui/svg-icons/action/settings'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
-import { updateComment, deleteComment } from '../../actions'
+import { updateComment, deleteComment } from '../../actions/comments'
 import EditCommentDialog from './EditCommentDialog'
 import {ICON_STYLE, ACTION_MENU_STYLE} from '../../config'
 
@@ -23,17 +23,17 @@ class PostActions extends Component {
 
     upVote(event) {
         event.stopPropagation()
-        this.props.dispatch(updateComment({ ...this.props.comment, voteScore: this.props.comment.voteScore + 1 }))
+        this.props.updateComment({ ...this.props.comment, voteScore: this.props.comment.voteScore + 1 })
     }
 
     downVote(event) {
         event.stopPropagation()
-        this.props.dispatch(updateComment({ ...this.props.comment, voteScore: this.props.comment.voteScore - 1 }))
+        this.props.updateComment({ ...this.props.comment, voteScore: this.props.comment.voteScore - 1 })
     }
 
     delete(event) {
         event.stopPropagation()
-        this.props.dispatch(deleteComment(this.props.comment))
+        this.props.deleteComment(this.props.comment)
     }
 
     edit(event) {
@@ -70,7 +70,7 @@ class PostActions extends Component {
                     <IconButton onClick={event => this.edit(event)} iconStyle={ICON_STYLE}>
                         <Settings />
                     </IconButton>
-                    <IconButton onClick={event => { event.stopPropagation() && this.setState({ showDelete: true }) }} iconStyle={ICON_STYLE}>
+                    <IconButton onClick={event => { event.stopPropagation(); this.setState({ showDelete: true }) }} iconStyle={ICON_STYLE}>
                         <Delete />
                     </IconButton>
                 </div>
@@ -95,5 +95,5 @@ class PostActions extends Component {
     }
 }
 
-export default connect()(PostActions)
+export default connect(oldProps => oldProps, {updateComment, deleteComment})(PostActions)
 

@@ -7,14 +7,14 @@ import MenuItem from 'material-ui/MenuItem'
 import IconButton from 'material-ui/IconButton'
 import ArrowUpward from 'material-ui/svg-icons/navigation/arrow-upward'
 import ArrowDownward from 'material-ui/svg-icons/navigation/arrow-downward'
-import { sortPosts } from '../../actions'
+import { sortPosts } from '../../actions/sort'
 import PostListItem from './PostListItem'
 import {SORT_POST_OPTIONS} from '../../config'
 
 class PostList extends Component {
 
     onChangeValue(key, value) {
-        this.props.dispatch(sortPosts({...this.props.sort, [key]: value}))
+        this.props.sortPosts({...this.props.sort, [key]: value})
     }
 
     render() {
@@ -55,4 +55,4 @@ const mapStateToProps = ({sort}, oldProps) => ({
     sort: sort.posts
 })
 
-export default connect(mapStateToProps)(PostList)
+export default connect(mapStateToProps, {sortPosts})(PostList)

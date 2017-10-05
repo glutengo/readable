@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Dialog from 'material-ui/Dialog'
-import { addPost, updatePost } from '../../actions'
+import { addPost, updatePost } from '../../actions/posts'
 import EditPost from './EditPost'
 import FlatButton from 'material-ui/FlatButton'
 
@@ -28,9 +28,9 @@ class EditPostDialog extends Component {
 
     handleSave() {
         if (this.props.post) {
-            this.props.dispatch(updatePost(this.state.post))
+            this.props.updatePost(this.state.post)
         } else {
-            this.props.dispatch(addPost(this.state.post))
+            this.props.addPost(this.state.post)
         }
         this.props.onClose();
     }
@@ -69,4 +69,4 @@ class EditPostDialog extends Component {
     }
 }
 
-export default connect()(EditPostDialog)
+export default connect(oldProps => oldProps, {updatePost, addPost})(EditPostDialog)

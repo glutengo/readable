@@ -7,20 +7,20 @@ import MenuItem from 'material-ui/MenuItem'
 import IconButton from 'material-ui/IconButton'
 import ArrowUpward from 'material-ui/svg-icons/navigation/arrow-upward'
 import ArrowDownward from 'material-ui/svg-icons/navigation/arrow-downward'
-import { sortComments } from '../../actions'
+import { sortComments } from '../../actions/sort'
 import CommentListItem from './CommentListItem'
 import { SORT_COMMENT_OPTIONS} from '../../config'
 
 class CommentList extends Component {
 
     onChangeValue(key, value) {
-        this.props.dispatch(sortComments({ ...this.props.sort, [key]: value }))
+        this.props.sortComments({ ...this.props.sort, [key]: value }) 
     }
 
     render() {
 
         const sortedComments = (this.props.comments && this.props.comments
-            .sort((commentA, commentB) => (this.props.sort.reverse ? -1 : 1) * (commentA[this.props.sort.by] - commentB[this.props.sort.by]))) || []
+            .sort((commentA, commentB) => (this.props.sort.reverse ? -1 : 1) * (commentB[this.props.sort.by] - commentA[this.props.sort.by]))) || []
 
 
         return (<div>
@@ -58,4 +58,4 @@ const mapStateToProps = ({ sort }, oldProps) => ({
     sort: sort.comments
 })
 
-export default connect(mapStateToProps)(CommentList)
+export default connect(mapStateToProps, {sortComments})(CommentList)

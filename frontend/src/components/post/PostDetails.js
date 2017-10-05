@@ -5,11 +5,12 @@ import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card'
 import { Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar'
 import FlatButton from 'material-ui/FlatButton'
 import Person from 'material-ui/svg-icons/social/person'
-import { fetchComments, addComment } from '../../actions'
+import { fetchComments, addComment } from '../../actions/comments'
 import EditComment from '../comment/EditComment'
 import PostActions from './PostActions'
 import VoteScore from '../VoteScore'
 import CommentList from '../comment/CommentList'
+import CategoryNavigation from '../CategoryNavigation'
 
 const EMPTY_COMMENT = {
     body: '',
@@ -27,18 +28,19 @@ class PostDetails extends Component {
     }
 
     saveComment() {
-        this.props.dispatch(addComment(this.props.post.id, this.state.comment))
+        this.props.addComment(this.props.post.id, this.state.comment)
         this.setState({ comment: EMPTY_COMMENT })
     }
 
     componentDidMount() {
-        this.props.dispatch(fetchComments(this.props.match.params.id))
+        this.props.fetchComments(this.props.match.params.id)
     }
 
     render() {
         const { post, comments } = this.props
         return (post && (
             <div>
+                <CategoryNavigation category={post.category}/>
                 <Card>
                     <CardHeader
                         avatar={<Person />}
@@ -90,4 +92,4 @@ const mapStateToProps = ({ posts, comments }, oldProps) => {
     return newProps
 }
 
-export default connect(mapStateToProps)(withRouter(PostDetails))
+export default connect(mapStateToProps, {addComment, fetchComments})(withRouter(PostDetails))
